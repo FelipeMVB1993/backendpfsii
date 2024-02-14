@@ -38,12 +38,12 @@ export default class DepartamentoDAO{
         let parametros=[];
         //é um número inteiro?
         if (!isNaN(parseInt(parametroConsulta))){
-            //consultar pelo código da categoria
+            //consultar pelo código do departamento
             sql='SELECT * FROM departamento WHERE dep_codigo = ? order by dep_nome';
             parametros = [parametroConsulta];
         }
         else{
-            //consultar pela descricao
+            //consultar pelo nome do departamento
             if (!parametroConsulta){
                 parametroConsulta = '';
             }

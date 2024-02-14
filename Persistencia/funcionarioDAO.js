@@ -20,15 +20,15 @@ export default class FuncionarioDAO {
     async atualizar(funcionario) {
         if (funcionario instanceof Funcionario) {
             const sql = `UPDATE funcionario SET func_nome = ?, func_dataAdmissao = ?,
-            func_cargo = ?, WHERE func_codigo = ?`;
-            const parametros = [funcionario.nome, funcionario.dataAdmissao, funcionario.cargo, funcionario.codigo];
+            func_cargo = ?, dep_codigo = ? WHERE func_codigo = ?`;
+            const parametros = [funcionario.nome, funcionario.dataAdmissao, funcionario.cargo, funcionario.departamento.codigo ,funcionario.codigo];
 
             const conexao = await conectar();
             await conexao.execute(sql, parametros);
             global.poolConexoes.releaseConnection(conexao);
         }
     }
-
+    
     async excluir(funcionario) {
         if (funcionario instanceof Funcionario) {
             const sql = `DELETE FROM funcionario WHERE func_codigo = ?`;
@@ -48,7 +48,7 @@ export default class FuncionarioDAO {
         let listaFuncionarios = [];
         
         if (!isNaN(parseInt(termo))){
-            //consulta pelo código do funcionario
+            //consulta pelo código do Departamento
             const sql = `SELECT 
             f.func_codigo,
             f.func_nome,
