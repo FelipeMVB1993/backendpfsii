@@ -1,32 +1,32 @@
-import Categoria from "../Modelo/categoria.js";
+import Departamento from "../Modelo/departamento.js";
 import conectar from "./conexao.js";
 //DAO = Data Access Object -> Objeto de acesso aos dados
-export default class CategoriaDAO{
-    async gravar(categoria){
-        if (categoria instanceof Categoria){
-            const sql = "INSERT INTO categoria(cat_descricao) VALUES(?)"; 
-            const parametros = [categoria.descricao];
+export default class DepartamentoDAO{
+    async gravar(departamento){
+        if (departamento instanceof Departamento){
+            const sql = "INSERT INTO departamento(dep_nome) VALUES(?)"; 
+            const parametros = [departamento.nome];
             const conexao = await conectar(); //retorna uma conexão
             const retorno = await conexao.execute(sql,parametros); //prepara a sql e depois executa
-            categoria.codigo = retorno[0].insertId;
+            departamento.codigo = retorno[0].insertId;
             global.poolConexoes.releaseConnection(conexao);
         }
     }
 
-    async atualizar(categoria){
-        if (categoria instanceof Categoria){
-            const sql = "UPDATE categoria SET cat_descricao = ? WHERE cat_codigo = ?"; 
-            const parametros = [categoria.descricao, categoria.codigo];
+    async atualizar(departamento){
+        if (departamento instanceof Departamento){
+            const sql = "UPDATE departamento SET dep_nome = ? WHERE dep_codigo = ?"; 
+            const parametros = [departamento.nome, departamento.codigo];
             const conexao = await conectar(); //retorna uma conexão
             await conexao.execute(sql,parametros); //prepara a sql e depois executa
             global.poolConexoes.releaseConnection(conexao);
         }
     }
 
-    async excluir(categoria){
-        if (categoria instanceof Categoria){
-            const sql = "DELETE FROM categoria WHERE cat_codigo = ?"; 
-            const parametros = [categoria.codigo];
+    async excluir(departamento){
+        if (departamento instanceof Departamento){
+            const sql = "DELETE FROM departamento WHERE dep_codigo = ?"; 
+            const parametros = [departamento.codigo];
             const conexao = await conectar(); //retorna uma conexão
             await conexao.execute(sql,parametros); //prepara a sql e depois executa
             global.poolConexoes.releaseConnection(conexao);
@@ -39,7 +39,7 @@ export default class CategoriaDAO{
         //é um número inteiro?
         if (!isNaN(parseInt(parametroConsulta))){
             //consultar pelo código da categoria
-            sql='SELECT * FROM categoria WHERE cat_codigo = ? order by cat_descricao';
+            sql='SELECT * FROM departamento WHERE dep_codigo = ? order by dep_nome';
             parametros = [parametroConsulta];
         }
         else{
@@ -47,16 +47,16 @@ export default class CategoriaDAO{
             if (!parametroConsulta){
                 parametroConsulta = '';
             }
-            sql = "SELECT * FROM categoria WHERE cat_descricao like ?";
+            sql = "SELECT * FROM departamento WHERE dep_nome like ?";
             parametros = ['%'+parametroConsulta+'%'];
         }
         const conexao = await conectar();
         const [registros, campos] = await conexao.execute(sql,parametros);
-        let listaCategorias = [];
+        let listaDepartamentos = [];
         for (const registro of registros){
-            const categoria = new Categoria(registro.cat_codigo,registro.cat_descricao);
-            listaCategorias.push(categoria);
+            const departamento = new Departamento(registro.dep_codigo,registro.dep_nome);
+            listaDepartamentos.push(departamento);
         }
-        return listaCategorias;
+        return listaDepartamentos;
     }
 }

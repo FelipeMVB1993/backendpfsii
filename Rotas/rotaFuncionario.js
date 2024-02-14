@@ -1,7 +1,7 @@
 import { Router } from "express";
-import ProdutoCtrl from "../Controle/produtoCtrl.js";
+import FuncionarioCtrl from "../Controle/funcionarioCtrl.js";
 
-const prodCtrl = new ProdutoCtrl();
+const prodCtrl = new FuncionarioCtrl();
 const rotaProduto = new Router();
 
 rotaProduto
