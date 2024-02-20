@@ -1,15 +1,15 @@
 import { Router } from "express";
 import FuncionarioCtrl from "../Controle/funcionarioCtrl.js";
 
-const prodCtrl = new FuncionarioCtrl();
-const rotaProduto = new Router();
+const funcCtrl = new FuncionarioCtrl();
+const rotaFuncionario = new Router();
 
-rotaProduto
-.get('/', prodCtrl.consultar)
-.get('/:termo', prodCtrl.consultar)
-.post('/', prodCtrl.gravar)
-.patch('/', prodCtrl.atualizar)
-.put('/', prodCtrl.atualizar)
-.delete('/', prodCtrl.excluir);
+rotaFuncionario
+.get('/', funcCtrl.consultar)
+.get('/:termo', funcCtrl.consultar)
+.post('/', funcCtrl.gravar)
+.patch('/', funcCtrl.atualizar)
+.put('/', funcCtrl.atualizar)
+.delete('/', funcCtrl.excluir);
 
-export default rotaProduto;
+export default rotaFuncionario;
