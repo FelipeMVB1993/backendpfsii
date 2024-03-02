@@ -16,5 +16,5 @@ app.use('/departamento',rotaDepartamento);
 app.use('/funcionario',rotaFuncionario);
 
 app.listen(porta, host, ()=>{
-    console.log(`Servidor escutando na porta ${host}:${porta}.`);
+    console.log(`Servidor escutando na porta: ${host}:${porta}.`);
 })
